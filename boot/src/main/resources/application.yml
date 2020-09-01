@@ -1,0 +1,72 @@
+#*************************************************************************
+#
+#   配置
+#
+#*************************************************************************
+
+server:
+  port: 7891
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8
+    username: root
+    password: root
+    druid:
+      max-active: 20
+      initial-size: 1
+      max-wait: 60000
+      min-idle: 1
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      validation-query: 'SELECT 1'
+      pool-prepared-statements: true
+      max-open-prepared-statements: 20
+      filters: stat,wall,slf4j
+      # 合并多个DruidDataSource的监控数据
+      useGlobalDataSourceStat: true
+  kafka:
+    consumer:
+      bootstrap-servers: 172.16.200.155:29092
+      group-id: group_id
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      bootstrap-servers: 172.16.200.155:29092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+
+mybatis-plus:
+  type-aliases-package: com.gitee.alona.generator.entity
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+    # 储存枚举索引
+    default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
+    auto-mapping-unknown-column-behavior: warning
+    # 关闭一级缓存缓存
+    local-cache-scope: statement
+    # 关闭二级缓存
+    cache-enabled: false
+  global-config:
+    banner: true
+    enable-sql-runner: true
+    db-config:
+      id-type: assign_uuid
+      logic-not-delete-value: 1
+      logic-delete-field: 0
+
+logging:
+  config: classpath:logging-config.xml
+
+# 配置文件加密
+# https://mybatis.plus/guide/safety.html
+my:
+  name: mpw:EJVhnZLYgqDv2wVQ9J9xiA==
+
