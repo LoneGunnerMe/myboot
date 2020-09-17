@@ -29,7 +29,7 @@
     </properties>
 
     <dependencies>
-        <!--   链路追踪 MDC    -->
+        <!--   链路追踪 MDC 👇   -->
         <dependency>
             <groupId>com.ofpay</groupId>
             <artifactId>logback-mdc-ttl</artifactId>
@@ -41,6 +41,7 @@
             <artifactId>transmittable-thread-local</artifactId>
             <version>2.11.5</version>
         </dependency>
+        <!--    链路追踪 MDC 👆    -->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
