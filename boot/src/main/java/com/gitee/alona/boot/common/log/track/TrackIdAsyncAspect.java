@@ -15,9 +15,10 @@ import org.springframework.stereotype.Component;
  *
  * @author 孤胆枪手
  */
-@Aspect
-@Component
-@Order(-9999)
+//@Aspect
+//@Component
+//@Order(-9999)
+@Deprecated
 public class TrackIdAsyncAspect {
     private static final Logger LOGGER = LoggerFactory.getLogger(TrackIdAsyncAspect.class);
 

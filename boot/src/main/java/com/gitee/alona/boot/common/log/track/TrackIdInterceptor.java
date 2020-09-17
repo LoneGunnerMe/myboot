@@ -17,8 +17,9 @@ import javax.servlet.http.HttpServletResponse;
  * @version 1.0
  * @date 2020-07-27 11:02
  */
-@Component
-@Order(0)
+//@Component
+//@Order(0)
+@Deprecated
 public class TrackIdInterceptor extends HandlerInterceptorAdapter {
     private static final Logger LOGGER = LoggerFactory.getLogger(TrackIdInterceptor.class);
 

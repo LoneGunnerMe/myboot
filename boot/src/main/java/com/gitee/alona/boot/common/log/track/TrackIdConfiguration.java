@@ -11,6 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @date 2020-07-27 11:07
  */
 //@Configuration
+@Deprecated
 public class TrackIdConfiguration implements WebMvcConfigurer {
 
     private final TrackIdInterceptor trackIdInterceptor;
