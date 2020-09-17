@@ -1,6 +1,5 @@
 package com.gitee.alona.boot.common.log.track;
 
-import cn.hutool.core.util.IdUtil;
 import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +8,7 @@ import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
 import static com.gitee.alona.boot.common.log.track.TrackIdUtil.TRACK_ID_NAME;
-import static com.gitee.alona.boot.common.log.track.TrackIdUtil.getTrackId;
+import static com.gitee.alona.boot.common.log.track.TrackIdUtil.generate;
 
 /**
  * @author 孤胆枪手
@@ -27,7 +26,7 @@ public class TrackIdFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        MDC.put(TRACK_ID_NAME, getTrackId());
+        MDC.put(TRACK_ID_NAME, generate());
         try {
             filterChain.doFilter(servletRequest, servletResponse);
         } finally {

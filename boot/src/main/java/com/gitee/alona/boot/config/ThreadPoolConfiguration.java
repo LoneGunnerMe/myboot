@@ -16,8 +16,8 @@ import java.util.concurrent.*;
  * @author 孤胆枪手
  * @version 1.0
  */
-@Configuration
-@EnableAsync
+//@Configuration
+//@EnableAsync
 public class ThreadPoolConfiguration {
 
     @Bean
@@ -51,14 +51,6 @@ public class ThreadPoolConfiguration {
 
     @Bean
     public ThreadFactory threadFactory() {
-        return new ThreadFactory() {
-            @Override
-            public Thread newThread(Runnable runnable) {
-
-                return new Thread(runnable, "exec-") {
-
-                };
-            }
-        };
+        return runnable -> new Thread(runnable, "exec-");
     }
 }

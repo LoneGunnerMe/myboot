@@ -4,7 +4,6 @@ package com.gitee.alona.boot.common.log.track;
 import com.alibaba.ttl.TransmittableThreadLocal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.NamedThreadLocal;
 
 import java.util.Optional;
 
@@ -15,22 +14,22 @@ import java.util.Optional;
 public final class TrackIdUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(TrackIdUtil.class);
 
-
     public static final String TRACK_ID_NAME = "trackId";
 
+    @Deprecated
     private static final ThreadLocal<String> TRACK_ID_THREAD_LOCAL = new TransmittableThreadLocal<>();
 
+    @Deprecated
     public static String getTrackId() {
-        String trackIdResult = Optional.ofNullable(TRACK_ID_THREAD_LOCAL.get())
+        return Optional.ofNullable(TRACK_ID_THREAD_LOCAL.get())
                 .orElseGet(() -> {
                     String trackId = generate();
                     TRACK_ID_THREAD_LOCAL.set(trackId);
                     return trackId;
                 });
-        LOGGER.info(trackIdResult);
-        return trackIdResult;
     }
 
+    @Deprecated
     public static void removeTrackId() {
         TRACK_ID_THREAD_LOCAL.remove();
     }
