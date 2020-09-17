@@ -12,9 +12,9 @@ import java.util.StringJoiner;
  */
 public class Result<T> {
 
-    private String msg;
-    private Integer code;
-    private T data;
+    protected final String msg;
+    protected final Integer code;
+    protected final T data;
 
     public Result(String msg, Integer code, T data) {
         this.msg = msg;
@@ -26,30 +26,22 @@ public class Result<T> {
         return msg;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
     public Integer getCode() {
         return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
     }
 
     public T getData() {
         return data;
     }
 
-    public void setData(T data) {
-        this.data = data;
-    }
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Result)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Result)) {
+            return false;
+        }
         Result<?> result = (Result<?>) o;
         return Objects.equals(getMsg(), result.getMsg()) &&
                 Objects.equals(getCode(), result.getCode()) &&

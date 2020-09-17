@@ -10,11 +10,14 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,10 +29,13 @@ import java.util.Map;
  */
 @Component
 @Aspect
+@Order(1)
 public class RequestLogAspect {
-    private static final Logger log = LoggerFactory.getLogger(RequestLogAspect.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RequestLogAspect.class);
 
-    @Pointcut("execution(* com.gitee.alona.boot.web.rest..*(..))")
+    @Pointcut("execution(public * com.gitee.alona.boot.web..*Controller.*(..))")
+//    @Pointcut("@within(org.springframework.web.bind.annotation.RestController)")
+//    @Pointcut("execution(@org.springframework.web.bind.annotation.RequestMapping public * *(..))")
     public void requestPointcut() {
     }
 
@@ -48,7 +54,7 @@ public class RequestLogAspect {
         requestInfo.setRequestParams(getRequestParamsByProceedingJoinPoint(proceedingJoinPoint));
         requestInfo.setResult(result);
         requestInfo.setTimeCost(System.currentTimeMillis() - start);
-        log.info("Request Info      : {}", JSON.toJSONString(requestInfo));
+        LOGGER.info("Request Info      : {}", JSON.toJSONString(requestInfo));
 
         return result;
     }
@@ -66,7 +72,7 @@ public class RequestLogAspect {
                 joinPoint.getSignature().getName()));
         requestErrorInfo.setRequestParams(getRequestParamsByJoinPoint(joinPoint));
         requestErrorInfo.setException(e);
-        log.info("Error Request Info      : {}", JSON.toJSONString(requestErrorInfo));
+        LOGGER.info("Error Request Info      : {}", JSON.toJSONString(requestErrorInfo));
     }
 
     /**
@@ -103,6 +109,8 @@ public class RequestLogAspect {
                 MultipartFile file = (MultipartFile) value;
                 //获取文件名
                 value = file.getOriginalFilename();
+            } else if (value instanceof ServletRequest || value instanceof ServletResponse) {
+                continue;
             }
 
             requestParams.put(paramNames[i], value);

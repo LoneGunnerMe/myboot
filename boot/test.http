@@ -1,0 +1,11 @@
+###
+GET http://localhost:7891/test/ex/ok
+
+###
+GET http://localhost:7891/test/ex/error
+
+###
+GET http://localhost:7891/test/getAllUrl
+
+###
+GET http://localhost:7891/test/async

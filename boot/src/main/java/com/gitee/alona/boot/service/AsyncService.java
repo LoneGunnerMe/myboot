@@ -14,18 +14,18 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AsyncService {
-    private static final Logger log = LoggerFactory.getLogger(AsyncService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AsyncService.class);
 
     @Autowired
     private MyClient client;
 
-    @Async
+    @Async("threadPoolTaskExecutor")
     public void asyncMethod() {
-        log.info("async ok");
+        LOGGER.info("async ok");
         String s = client.simpleRequest();
-        log.info("async simpleRequest:{}", s);
+        LOGGER.info("async simpleRequest:{}", s);
         new Thread(() -> {
-            log.info("hello");
+            LOGGER.info("new thread say hello");
         }).start();
     }
 }

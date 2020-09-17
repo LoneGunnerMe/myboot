@@ -9,7 +9,6 @@ package com.gitee.alona.boot.common.log;
  */
 public final class LogConstant {
 
-    public static final String TRACK_ID_NAME = "trackId";
 
     private LogConstant() {
     }

@@ -1,0 +1,46 @@
+package com.gitee.alona.boot.web.rest.response.body;
+
+import com.gitee.alona.boot.web.rest.response.ErrorResult;
+import com.gitee.alona.boot.web.rest.response.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.MethodParameter;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.server.ServerHttpRequest;
+import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
+
+import static com.gitee.alona.boot.web.rest.response.body.ResponseConstant.RESPONSE_RESULT_ANN;
+
+/**
+ * @author 孤胆枪手
+ * @version 1.0
+ */
+//@Component
+//@ControllerAdvice
+public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ResponseResultHandler.class);
+
+    @Override
+    public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
+        LOGGER.info("进入响应体判断...");
+        Object isWrapper = RequestContextHolder.getRequestAttributes()
+                .getAttribute(RESPONSE_RESULT_ANN, RequestAttributes.SCOPE_REQUEST);
+        return Boolean.TRUE.equals(isWrapper);
+    }
+
+    @Override
+    public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
+        LOGGER.info("进入响应体处理");
+        // 如果是body是异常实体类，就直接返回
+        if (body instanceof ErrorResult) {
+            return body;
+        }
+        return new Result<>("ok", 200, body);
+    }
+}
