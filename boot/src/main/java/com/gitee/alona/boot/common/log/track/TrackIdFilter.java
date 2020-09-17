@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static com.gitee.alona.boot.common.log.track.TrackIdUtil.TRACK_ID_NAME;
@@ -25,10 +26,12 @@ public class TrackIdFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        MDC.put(TRACK_ID_NAME, generate());
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
+        String trackId = generate();
+        MDC.put(TRACK_ID_NAME, trackId);
+        ((HttpServletResponse) response).setHeader("ETag-request-id", trackId);
         try {
-            filterChain.doFilter(servletRequest, servletResponse);
+            filterChain.doFilter(request, response);
         } finally {
             MDC.remove(TRACK_ID_NAME);
         }
