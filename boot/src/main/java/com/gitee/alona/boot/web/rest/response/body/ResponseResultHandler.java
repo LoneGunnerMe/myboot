@@ -18,27 +18,36 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import static com.gitee.alona.boot.web.rest.response.body.ResponseConstant.RESPONSE_RESULT_ANN;
 
 /**
+ * 包装返回值
+ * 注意：如果 controller 中返回的是 String 会报类型转换错误
+ *
  * @author 孤胆枪手
  * @version 1.0
  */
-//@Component
-//@ControllerAdvice
+@Component
+@ControllerAdvice
 public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
     private static final Logger LOGGER = LoggerFactory.getLogger(ResponseResultHandler.class);
 
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
-        LOGGER.info("进入响应体判断...");
-        Object isWrapper = RequestContextHolder.getRequestAttributes()
-                .getAttribute(RESPONSE_RESULT_ANN, RequestAttributes.SCOPE_REQUEST);
-        return Boolean.TRUE.equals(isWrapper);
+        return ResponseConstant.IS_ANN.get();
     }
+
+//    @Override
+//    public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
+//        LOGGER.info("进入响应体判断...");
+//        Object isWrapper = RequestContextHolder.getRequestAttributes()
+//                .getAttribute(RESPONSE_RESULT_ANN, RequestAttributes.SCOPE_REQUEST);
+//        return Boolean.TRUE.equals(isWrapper);
+//    }
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
+        ResponseConstant.IS_ANN.remove();
         LOGGER.info("进入响应体处理");
-        // 如果是body是异常实体类，就直接返回
-        if (body instanceof ErrorResult) {
+        // 如果是body是响应实体类，就直接返回
+        if (body instanceof Result) {
             return body;
         }
         return new Result<>("ok", 200, body);

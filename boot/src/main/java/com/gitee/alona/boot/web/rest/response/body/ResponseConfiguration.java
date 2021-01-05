@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @version 1.0
  * @date 2020-07-27 11:07
  */
-//@Configuration
+@Configuration
 public class ResponseConfiguration implements WebMvcConfigurer {
 
     private final ResponseResultInterceptor responseResultInterceptor;
@@ -26,7 +26,7 @@ public class ResponseConfiguration implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // addPathPatterns 用于添加拦截规则, 这里假设拦截 /url 后面的全部链接
+        // addPathPatterns 用于添加拦截规则
         // excludePathPatterns 用户排除拦截
         registry.addInterceptor(responseResultInterceptor)
                 .excludePathPatterns("/error")

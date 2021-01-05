@@ -22,10 +22,8 @@ public class BootApplication {
     private static final Logger LOGGER = LoggerFactory.getLogger(BootApplication.class);
 
     private static ConfigurableApplicationContext context;
-    private static String[] args;
 
     public static void main(String[] args) {
-        BootApplication.args = args;
         BootApplication.context = SpringApplication.run(BootApplication.class, args);
         LOGGER.info("Ohhhhhhhhhh 它居然跑起来了");
     }

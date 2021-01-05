@@ -1,20 +1,22 @@
 package com.gitee.alona.boot.web.rest;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.gitee.alona.boot.common.util.SpringContextUtil;
 import com.gitee.alona.boot.service.AsyncService;
 import com.gitee.alona.boot.web.rest.response.body.annotation.ResponseResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -23,7 +25,7 @@ import java.util.*;
  */
 @RestController
 @RequestMapping("/test")
-@ResponseResult
+//@ResponseResult
 public class TestController {
     private static final Logger LOGGER = LoggerFactory.getLogger(TestController.class);
 
@@ -33,15 +35,11 @@ public class TestController {
         return new ArrayList<>();
     }
 
-    @Autowired
-    private RequestMappingHandlerMapping bean;
-
     @GetMapping("getAllUrl")
     public Object getAllUrl(HttpServletRequest request) {
-        Set<String> result = new HashSet<String>();
-//        WebApplicationContext wc = (WebApplicationContext) request.getAttribute(DispatcherServlet.WEB_APPLICATION_CONTEXT_ATTRIBUTE);
-//        RequestMappingHandlerMapping bean = wc.getBean(RequestMappingHandlerMapping.class);
-        Map<RequestMappingInfo, HandlerMethod> handlerMethods = bean.getHandlerMethods();
+        Set<String> result = new HashSet<>();
+        Map<RequestMappingInfo, HandlerMethod> handlerMethods = SpringContextUtil.getApplicationContext()
+                .getBean(RequestMappingHandlerMapping.class).getHandlerMethods();
         for (RequestMappingInfo rmi : handlerMethods.keySet()) {
             PatternsRequestCondition pc = rmi.getPatternsCondition();
             Set<String> pSet = pc.getPatterns();
@@ -76,5 +74,70 @@ public class TestController {
 
     private void test() {
 
+    }
+
+
+    @Autowired
+    private HttpServletRequest request;
+
+    @RequestMapping("/request")
+    @ResponseResult
+    public Object testRequest() {
+
+        Object attribute = request.getParameter("name");
+        LOGGER.info("attr: [{}]", attribute);
+        return ResponseEntity.ok(attribute);
+    }
+
+    @PostMapping("/jsonDate")
+    @ResponseResult
+    public Object jsonDate(@RequestBody RequestDateDTO requestDateDTO) {
+        LOGGER.info("requestDateDTO：{}", requestDateDTO);
+        return 0;
+    }
+
+    public static class RequestDateDTO {
+
+        @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        LocalDateTime localDateTime;
+
+        @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        Date date;
+
+        String name;
+
+        public LocalDateTime getLocalDateTime() {
+            return localDateTime;
+        }
+
+        public void setLocalDateTime(LocalDateTime localDateTime) {
+            this.localDateTime = localDateTime;
+        }
+
+        public Date getDate() {
+            return date;
+        }
+
+        public void setDate(Date date) {
+            this.date = date;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return "RequestDateDTO{" + "localDateTime=" + localDateTime +
+                    ", date=" + date +
+                    ", name='" + name + '\'' +
+                    '}';
+        }
     }
 }

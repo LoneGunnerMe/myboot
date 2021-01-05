@@ -67,8 +67,34 @@ mybatis-plus:
 logging:
   config: classpath:logging-config.xml
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - loggers
+          - health
+          - beans
+          - heapdump
+
+  endpoint:
+    beans:
+      enabled: true
+    loggers:
+      enabled: true
+
 # 配置文件加密
 # https://mybatis.plus/guide/safety.html
 my:
   name: mpw:EJVhnZLYgqDv2wVQ9J9xiA==
 
+forest:
+  bean-id: forestConfiguration # 在spring上下文中bean的id, 默认值为forestConfiguration
+  backend: okhttp3 # 后端HTTP API： okhttp3
+  max-connections: 1000 # 连接池最大连接数，默认值为500
+  max-route-connections: 500 # 每个路由的最大连接数，默认值为500
+  timeout: 3000 # 请求超时时间，单位为毫秒, 默认值为3000
+  connect-timeout: 3000 # 连接超时时间，单位为毫秒, 默认值为2000
+  retry-count: 1 # 请求失败后重试次数，默认为0次不重试
+  ssl-protocol: SSLv3 # 单向验证的HTTPS的默认SSL协议，默认为SSLv3
+  logEnabled: true # 打开或关闭日志，默认为true

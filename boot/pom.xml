@@ -18,11 +18,11 @@
         <java.version>1.8</java.version>
         <mybatis-plus.version>3.4.0</mybatis-plus.version>
         <druid.version>1.1.23</druid.version>
-        <mapstruct.version>1.3.1.Final</mapstruct.version>
-        <forest.version>1.4.8</forest.version>
+        <mapstruct.version>1.4.1.Final</mapstruct.version>
+        <forest.version>1.5.0-BETA9</forest.version>
         <retrofit.version>2.1.2</retrofit.version>
         <hutool-all.version>5.3.8</hutool-all.version>
-        <guava.version>29.0-jre</guava.version>
+        <guava.version>30.1-jre</guava.version>
         <fastjson.version>1.2.72</fastjson.version>
         <dynamic-datesource.version>3.2.0</dynamic-datesource.version>
         <dockerfile-maven.version>1.4.13</dockerfile-maven.version>
@@ -56,7 +56,7 @@
             <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
 
-        <!--    工具包    -->
+        <!--    工具包 👇   -->
         <dependency>
             <groupId>com.jayway.jsonpath</groupId>
             <artifactId>json-path</artifactId>
@@ -97,7 +97,6 @@
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
@@ -157,6 +156,11 @@
         <!--            <groupId>org.springframework.boot</groupId>-->
         <!--            <artifactId>spring-boot-starter-thymeleaf</artifactId>-->
         <!--        </dependency>-->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-actuator</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
@@ -185,6 +189,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <!--        <dependency>-->
         <!--            <groupId>org.projectlombok</groupId>-->

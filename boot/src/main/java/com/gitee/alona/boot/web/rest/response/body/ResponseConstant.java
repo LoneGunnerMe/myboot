@@ -11,6 +11,8 @@ public final class ResponseConstant {
 
     public static final String RESPONSE_RESULT_ANN = "RESPONSE_RESULT_ANN";
 
+    public static final ThreadLocal<Boolean> IS_ANN = ThreadLocal.withInitial(() -> Boolean.FALSE);
+
     private ResponseConstant() {
     }
 }

@@ -42,11 +42,8 @@ public class ThreadPoolConfiguration {
 
     @Bean
     public ExecutorService executorService(ThreadFactory threadFactory) {
-        return new ThreadPoolExecutor(
-                4, 8,
-                5000, TimeUnit.MILLISECONDS,
-                new ArrayBlockingQueue<>(20),
-                threadFactory);
+        return new ThreadPoolExecutor(4, 8, 5000, TimeUnit.MILLISECONDS,
+                new ArrayBlockingQueue<>(20), threadFactory);
     }
 
     @Bean
