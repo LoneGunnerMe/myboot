@@ -1,6 +1,5 @@
 package com.gitee.alona.boot.web.rest.response.body;
 
-import com.gitee.alona.boot.web.rest.response.ErrorResult;
 import com.gitee.alona.boot.web.rest.response.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,13 +8,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.http.server.ServletServerHttpRequest;
+import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
-
-import static com.gitee.alona.boot.web.rest.response.body.ResponseConstant.RESPONSE_RESULT_ANN;
 
 /**
  * 包装返回值
@@ -23,6 +20,8 @@ import static com.gitee.alona.boot.web.rest.response.body.ResponseConstant.RESPO
  *
  * @author 孤胆枪手
  * @version 1.0
+ * @see org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor#writeWithMessageConverters(Object, MethodParameter, ServletServerHttpRequest, ServletServerHttpResponse)
+ * @see org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice
  */
 @Component
 @ControllerAdvice
@@ -33,14 +32,6 @@ public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
         return ResponseConstant.IS_ANN.get();
     }
-
-//    @Override
-//    public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
-//        LOGGER.info("进入响应体判断...");
-//        Object isWrapper = RequestContextHolder.getRequestAttributes()
-//                .getAttribute(RESPONSE_RESULT_ANN, RequestAttributes.SCOPE_REQUEST);
-//        return Boolean.TRUE.equals(isWrapper);
-//    }
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {

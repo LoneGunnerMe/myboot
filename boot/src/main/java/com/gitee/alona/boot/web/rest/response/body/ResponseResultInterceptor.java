@@ -21,6 +21,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
+ * 判断该请求是否需要包装的拦截器
+ *
  * @author 孤胆枪手
  * @version 1.0
  * @see ResponseResultHandler
