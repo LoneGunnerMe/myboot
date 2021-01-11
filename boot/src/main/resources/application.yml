@@ -42,6 +42,18 @@ spring:
       bootstrap-servers: 172.16.200.155:29092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  redis:
+    host: localhost
+    database: 0
+    port: 6379
+    password:
+  cache:
+    redis:
+      key-prefix: 'CACHE::'
+    cache-names:
+      - aaa
+      - bbb
+      - ccc
 
 
 mybatis-plus:
@@ -66,6 +78,9 @@ mybatis-plus:
 
 logging:
   config: classpath:logging-config.xml
+  level:
+    org.springframework.web: trace
+    com.gitee.alona: debug
 
 management:
   endpoints:

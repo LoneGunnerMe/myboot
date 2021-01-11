@@ -26,6 +26,7 @@
         <fastjson.version>1.2.72</fastjson.version>
         <dynamic-datesource.version>3.2.0</dynamic-datesource.version>
         <dockerfile-maven.version>1.4.13</dockerfile-maven.version>
+        <json-path.version>2.5.0</json-path.version>
     </properties>
 
     <dependencies>
@@ -60,7 +61,7 @@
         <dependency>
             <groupId>com.jayway.jsonpath</groupId>
             <artifactId>json-path</artifactId>
-            <version>2.4.0</version>
+            <version>${json-path.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.lianjiatech</groupId>
@@ -102,6 +103,12 @@
             <artifactId>mapstruct</artifactId>
             <version>${mapstruct.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.11</version>
+        </dependency>
+
 
         <!--   数据库相关     -->
         <!--        <dependency>-->
@@ -139,10 +146,10 @@
         <!--            <groupId>org.springframework.boot</groupId>-->
         <!--            <artifactId>spring-boot-starter-data-mongodb</artifactId>-->
         <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-starter-data-redis</artifactId>-->
-        <!--        </dependency>-->
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-data-redis</artifactId>
+                </dependency>
         <!--        <dependency>-->
         <!--            <groupId>org.liquibase</groupId>-->
         <!--            <artifactId>liquibase-core</artifactId>-->
@@ -204,6 +211,8 @@
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
+
+        <!--   单元测试 👇     -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -220,6 +229,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!--   单元测试 👆     -->
         <!--        <dependency>-->
         <!--            <groupId>org.springframework.security</groupId>-->
         <!--            <artifactId>spring-security-test</artifactId>-->
